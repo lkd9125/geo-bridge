@@ -29,8 +29,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
 
-	runtimeOnly 'dev.miku:r2dbc-mysql:0.9.5.RELEASE'
-    runtimeOnly 'com.github.jasync-sql:jasync-mysql:r3.1.0'
+	runtimeOnly 'io.asyncer:r2dbc-mysql:1.1.1'
 
 	compileOnly 'org.projectlombok:lombok'
 	
@@ -43,4 +42,10 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+tasks.withType(Javadoc) {
+    options.encoding = 'UTF-8'
+    options.charSet = 'UTF-8'
+    options.docEncoding = 'UTF-8'
 }

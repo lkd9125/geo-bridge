@@ -40,3 +40,6 @@ nginx
 /src/main/resources/**-dev.yml
 application.pid
 firebase/
+
+### ETC ###
+_docker

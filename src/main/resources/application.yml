@@ -2,8 +2,8 @@ spring:
     application:
         name: bridge
     r2dbc:
-        url: r2dbc:mysql://localhost:13306/kac-utm
-        username: kac
-        password: palnet!234
+        url: r2dbc:mysql://localhost:23306/bridge?ssl=false
+        username: bridge
+        password: bridge!@#$1234
     flyway:
-        enabled: false  # MySQL + R2DBC 조합이면 일반 JDBC Flyway 자동 적용 안 됨
+        enabled: false

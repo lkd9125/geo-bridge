@@ -1,0 +1,14 @@
+services:
+  db:
+    image: mysql
+    container_name: geo-bridge-db
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_ROOT_PASSWORD=geo-bridge!@#$1234
+      - MYSQL_DATABASE=bridge
+      - MYSQL_USER=bridge
+      - MYSQL_PASSWORD=geo-bridge!@#$1234
+    ports:
+      - 23306:3306
+    volumes:
+      - ./_docker/mysql/data:/var/lib/mysql
