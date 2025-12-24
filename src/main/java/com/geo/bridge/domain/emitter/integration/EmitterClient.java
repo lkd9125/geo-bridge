@@ -17,17 +17,10 @@ import reactor.core.publisher.Mono;
  * </ul>
  */
 public interface EmitterClient {
-
     String getName();
-    
     String getHost();
-    
     void connect();
-    
     void disconnect();
-    
     Boolean isConnected();
-
     Mono<Void> send(Coordinate coordinate);
-
 }

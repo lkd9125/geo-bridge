@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
  * 위치 데이터 계산 서비스
  * <p>기능</p>
  * <ul>
- *     <li>{@link #createSimulatorCoordinates()} 위치 데이터 발생</li>
+ *     <li>{@link #createSimulatorCoordinates(List, Double, int)} 위치 데이터 발생</li>
  * </ul>
  */
 @Service
@@ -26,8 +26,12 @@ public class EmitterSimulatorService {
      * @param speed 속도
      * @return
      */
-    public List<Coordinate> createSimulatorCoordinates(List<Coordinate> coordinates, Double speed){
+    public List<Coordinate> createSimulatorCoordinates(List<Coordinate> coordinates, Double speed, int cycle){
+
+        
+
         return null;
     }
+
 
 }
