@@ -1,9 +1,19 @@
 package com.geo.bridge.domain.emitter.integration;
 
-import org.eclipse.paho.mqttv5.client.IMqttClient;
+import java.util.Arrays;
+import java.util.UUID;
+
+import org.eclipse.paho.mqttv5.client.IMqttAsyncClient;
+import org.eclipse.paho.mqttv5.client.MqttConnectionOptions;
+import org.eclipse.paho.mqttv5.common.MqttException;
 import org.locationtech.jts.geom.Coordinate;
+import org.springframework.integration.mqtt.core.Mqttv5ClientManager;
+
+import com.geo.bridge.global.config.IOScheduler;
+import com.geo.bridge.global.utils.JsonUtil;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 
@@ -20,6 +30,7 @@ import reactor.core.publisher.Mono;
  * </ul>
  */
 @Data
+@Slf4j
 public class MqttEmitterClient implements EmitterClient{
 
     private String name;
@@ -28,9 +39,8 @@ public class MqttEmitterClient implements EmitterClient{
     private String topic;
     private String username;
     private String password;
-    private IMqttClient mqttClient;
+    private IMqttAsyncClient mqttClient;
     
-
     /**
      * MQTT 클라이언트 생성과 동시에 연결
      * @param name
@@ -49,22 +59,69 @@ public class MqttEmitterClient implements EmitterClient{
         this.connect();
     }
 
+    /**
+     * MQTT 연결 기능
+     */
     @Override
     public void connect() {
+        String clientId = "BRIDGE_CLIENT_%s_%s".formatted(UUID.randomUUID(), this.name);
+        try{
+            MqttConnectionOptions options = new MqttConnectionOptions();
+            options.setServerURIs(new String[]{this.host});
+    
+            Mqttv5ClientManager manager = new Mqttv5ClientManager(options, clientId);
+
+            this.mqttClient = manager.getClient();
+            this.mqttClient.connect();
+            log.info("Try '{}' TCP Connect {} : {}", name, clientId, this.host);
+        } catch (MqttException e){
+            log.error("THIS {} CONNECTED ERROR :: {}", this.name, e.getMessage());
+        } catch (Exception e){
+            log.error("OTHER ERROR :: {}", e.getMessage());
+        }
     }
 
+    /**
+     * MQTT 연결 해제 기능
+     */
     @Override
     public void disconnect() {
+        if(this.isConnected()){
+            try {
+                this.mqttClient.disconnect();
+            } catch (MqttException e) {
+                log.warn("MQTT disconnect error: {}", e.getMessage(), e);
+            }
+        }
     }
 
+    /**
+     * 연결여부 조회
+     */
     @Override
     public Boolean isConnected() {
         return this.isConnected;
     }
 
+    /**
+     * 데이터 전송 [x,y] 형태
+     */
     @Override
     public Mono<Void> send(Coordinate coordinate) {
-        return Mono.just(null);
+        // [X,Y] 형태로 전송
+        return Mono.<Void>fromRunnable(() -> {
+                try {
+                    mqttClient.publish(
+                        topic,
+                        JsonUtil.toJson(Arrays.asList(coordinate.x, coordinate.y)).getBytes(),
+                        1,
+                        false
+                    );
+                } catch (MqttException e) {
+                    throw new RuntimeException(e);
+                }
+            })
+            .subscribeOn(IOScheduler.scheduler());
     }
 
 }
