@@ -21,9 +21,9 @@ configurations {
 }
 
 repositories {
-        maven { url "https://repo.osgeo.org/repository/release" }
-        mavenCentral()
-    }
+	maven { url = uri("https://repo.osgeo.org/repository/release") }
+	mavenCentral()
+}
 
 dependencies {
 	// Spring Web Engine
@@ -38,6 +38,8 @@ dependencies {
     implementation 'org.springframework.integration:spring-integration-mqtt'
     implementation 'org.springframework.integration:spring-integration-core'
     implementation 'org.springframework.integration:spring-integration-ip'
+	implementation 'org.eclipse.paho:org.eclipse.paho.mqttv5.client:1.2.5'
+
 
 	// GeoTools
     implementation 'com.esri.geometry:esri-geometry-api:2.2.4'
@@ -48,7 +50,6 @@ dependencies {
     implementation 'org.geotools:gt-coverage:29.2'
     implementation 'org.geotools:gt-geotiff:29.2'
     implementation 'org.geotools:gt-epsg-hsql:29.2'
-    implementation 'javax.media:jai_codec:1.1.3'
 
 	// R2DBC MySQL Driver
 	runtimeOnly 'io.asyncer:r2dbc-mysql:1.1.1'

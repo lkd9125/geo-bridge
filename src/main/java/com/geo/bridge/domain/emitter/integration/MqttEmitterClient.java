@@ -1,8 +1,7 @@
 package com.geo.bridge.domain.emitter.integration;
 
+import org.eclipse.paho.mqttv5.client.IMqttClient;
 import org.locationtech.jts.geom.Coordinate;
-import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
-import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
 
 import lombok.Data;
 import reactor.core.publisher.Mono;
@@ -29,7 +28,8 @@ public class MqttEmitterClient implements EmitterClient{
     private String topic;
     private String username;
     private String password;
-    private DefaultMqttPahoClientFactory aClientFactory;
+    private IMqttClient mqttClient;
+    
 
     /**
      * MQTT 클라이언트 생성과 동시에 연결
