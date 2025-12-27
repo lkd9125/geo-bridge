@@ -1,6 +1,7 @@
 package com.geo.bridge.api.emitter.client.controller;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,12 +24,9 @@ public class EmitterClientController {
      * @return
      */
     @PostMapping
-    public Mono<Void> createEmitterClient(@Valid Mono<CreateEmitterClientRQ> rq){
+    public Mono<Void> createEmitterClient(@Valid @RequestBody Mono<CreateEmitterClientRQ> rq){
         return rq
         .flatMap(rqModel -> {
-            return null;
-        })
-        .onErrorResume(e -> {
             return null;
         })
         .then();
