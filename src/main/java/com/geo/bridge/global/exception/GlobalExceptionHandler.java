@@ -71,7 +71,6 @@ public class GlobalExceptionHandler {
         BaseExceptionRS model = new BaseExceptionRS();
         model.setCode(code.getCode());
         model.setMessage(code.getMessage());
-        model.setDescription(e.getMessage());
 
         return Mono.just(
             ResponseEntity.status(code.getStatus())
