@@ -10,7 +10,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
- * Emitter Client RQ Web Model
+ * Emitter Client 저장 RQ Web Model
  * 
  * <p>변수</p>
  * <ul>
