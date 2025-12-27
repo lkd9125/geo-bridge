@@ -14,7 +14,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Emitter DB 저장용 DTO
+ * Emitter DB Table DTO
  * <p>변수</p>
  * <ul>
  *     <li>{@link #idx} : 클라이어트 고유 키 값</li>
